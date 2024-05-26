@@ -1,0 +1,190 @@
+definitions:
+  main.Baju:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: integer
+      size:
+        type: string
+    type: object
+  main.UserCredentials:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /baju:
+    get:
+      consumes:
+      - application/json
+      description: Mengembalikan daftar semua baju
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Baju'
+            type: array
+      summary: Menampilkan daftar baju
+      tags:
+      - baju
+    post:
+      consumes:
+      - application/json
+      description: Create a new Baju and add it to the database
+      parameters:
+      - description: New Baju details
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/main.Baju'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Baju successfully created
+          schema:
+            type: string
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Create a new Baju
+      tags:
+      - Baju
+  /baju/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a Baju from the database by its ID
+      parameters:
+      - description: Baju ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Baju successfully deleted
+          schema:
+            type: string
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Delete a Baju
+      tags:
+      - Baju
+    get:
+      consumes:
+      - application/json
+      description: Get a Baju from the database by its ID
+      parameters:
+      - description: Baju ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Baju'
+        "404":
+          description: Baju not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Get a Baju by ID
+      tags:
+      - Baju
+    put:
+      consumes:
+      - application/json
+      description: Update an existing Baju in the database
+      parameters:
+      - description: Baju ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated Baju details
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/main.Baju'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Baju successfully updated
+          schema:
+            type: string
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Update a Baju
+      tags:
+      - Baju
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Logs user in with username and password
+      parameters:
+      - description: User credentials
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/main.UserCredentials'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: token
+          schema:
+            type: string
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      summary: Login
+      tags:
+      - Authentication
+swagger: "2.0"
